@@ -189,7 +189,8 @@ export default function DecisionTree() {
 
                             }}
 
-                        >{node.type === "BOT" ? <span>🤖</span> : <span>🧑🏻</span>}</button>
+                        >{node.type === "BOT" ? <span role="img" aria-label="robot">🤖</span> : <span role="img" aria-label="user">🧑🏻</span>}</button>
+                        
                     ],
 
                 })}
