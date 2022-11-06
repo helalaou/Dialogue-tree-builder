@@ -31,6 +31,7 @@ export default function DecisionTree() {
 
         link.click();
     };
+    
     //function to import data from json file and set it to treeData 
     const importData = (e) => {
         const file = e.target.files[0];
