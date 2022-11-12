@@ -1,12 +1,12 @@
 import React from 'react';
-import DecisionTree from './Components/DecisionTree';
+import DialogueTree from './Components/DialogueTree';
 
 
 
 function App() {
   return (
     <div >
-      <DecisionTree />
+      <DialogueTree />
        
     </div>
       

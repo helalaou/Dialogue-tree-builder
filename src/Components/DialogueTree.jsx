@@ -4,11 +4,9 @@ import { removeNodeAtPath } from 'react-sortable-tree';
 import { addNodeUnderParent } from 'react-sortable-tree';
 import { changeNodeAtPath } from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
-import 'react-tree-graph/dist/style.css';
-import './DecisionTree.css';
+import 'react-tree-graph/dist/style.css'; 
 
-
-export default function DecisionTree() {
+export default function DialogueTree() {
     const [treeData, setTreeData] = useState([
         { title: "سلام", superparent: true, children: [], type: "BOT" },
     ]);
