@@ -5,6 +5,7 @@ import { addNodeUnderParent } from 'react-sortable-tree';
 import { changeNodeAtPath } from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import 'react-tree-graph/dist/style.css'; 
+import './main.css';
 
 export default function DialogueTree() {
     const [treeData, setTreeData] = useState([
@@ -47,7 +48,7 @@ export default function DialogueTree() {
 
     return (
 
-        <div style={{  height: 3000, width: 1500}}>
+        <div style={{  height: 3000, width: 1500}} className="container">
         
             <SortableTree
                 treeData={treeData}
@@ -55,6 +56,8 @@ export default function DialogueTree() {
                     setTreeData(treeData)
                     console.log(treeData)
                 }}
+
+               
                 generateNodeProps={({ node, path }) => ({
                     //title toggle between edit and show
                     title: (
@@ -204,7 +207,9 @@ export default function DialogueTree() {
                 padding: "5px",
                 backgroundColor: "black",
         
-             }}>
+             }}
+             className="export"
+             >
                 
             <button onClick={exportData}>Export JSON</button>
 
