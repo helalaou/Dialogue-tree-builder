@@ -12,6 +12,7 @@
 <p align="center">
   <a href="https://github.com/helalaou/Dialogue-tree-builder/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/helalaou/Dialogue-tree-builder/actions/workflows/ci.yml/badge.svg" /></a>
   <a href="License.md"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-4f46e5.svg" /></a>
+  <a href="https://doi.org/10.1007/978-3-031-79164-2_7"><img alt="DOI" src="https://img.shields.io/badge/DOI-10.1007%2F978--3--031--79164--2__7-blue.svg" /></a>
   <img alt="React 16" src="https://img.shields.io/badge/React-16-149eca.svg" />
   <img alt="Create React App" src="https://img.shields.io/badge/Create%20React%20App-3-09d3ac.svg" />
 </p>
@@ -26,6 +27,10 @@ Dialogue Tree Builder is a small single-page React app for mapping out the conve
 should handle. Each node in the tree is one turn, marked as either a **bot** message or a **user**
 message, and each branch is a different way the conversation can go. The result can be exported as
 a JSON file and used as structured data when building or training a chatbot.
+
+The tool accompanies the paper
+[*DarijaGenie: Learning Moroccan Arabic Through a Multimodal Chatbot*](https://doi.org/10.1007/978-3-031-79164-2_7)
+(see [Citation](#citation)).
 
 Everything runs in the browser. There is no backend and no account: the tree lives in memory
 while you work, and you save it by exporting it to a file.
@@ -152,8 +157,19 @@ and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Citation
 
-If you use Dialogue Tree Builder in your work, please cite it using the metadata in
-[CITATION.cff](CITATION.cff), or click **Cite this repository** on GitHub.
+If you use this tool in your research, please cite:
+
+```bibtex
+@incollection{elalaoui2025darijagenie,
+  title     = {DarijaGenie: Learning Moroccan Arabic Through a Multimodal Chatbot},
+  author    = {El Alaoui, Hamza and Cavalli-Sforza, Violetta},
+  series    = {Communications in Computer and Information Science},
+  publisher = {Springer},
+  pages     = {74--89},
+  year      = {2025},
+  doi       = {10.1007/978-3-031-79164-2_7}
+}
+```
 
 ## License
 
