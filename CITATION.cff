@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Dialogue Tree Builder"
+abstract: >-
+  A browser-based editor for building branching chatbot dialogue trees, with
+  bot and user turns, drag-and-drop restructuring, and JSON import and export.
+authors:
+  - family-names: "El Alaoui"
+    given-names: "Hamza"
+repository-code: "https://github.com/helalaou/Dialogue-tree-builder"
+license: MIT
+version: 0.1.0
+keywords:
+  - chatbot
+  - dialogue tree
+  - conversation design
+  - react
