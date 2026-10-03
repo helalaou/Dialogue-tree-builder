@@ -1,0 +1,41 @@
+name: Bug report
+description: Something is not working as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: A clear description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Add a node under …
+        2. Click …
+        3. See error …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and device
+      placeholder: e.g. Chrome 141 on macOS, Firefox 140 on Windows
+  - type: textarea
+    id: tree
+    attributes:
+      label: Exported JSON (optional)
+      description: If the problem involves a specific tree, paste the exported JSON or a minimal part of it.
+      render: json
+  - type: textarea
+    id: logs
+    attributes:
+      label: Browser console output
+      render: text
