@@ -28,9 +28,13 @@ should handle. Each node in the tree is one turn, marked as either a **bot** mes
 message, and each branch is a different way the conversation can go. The result can be exported as
 a JSON file and used as structured data when building or training a chatbot.
 
-The tool accompanies the paper
-[*DarijaGenie: Learning Moroccan Arabic Through a Multimodal Chatbot*](https://doi.org/10.1007/978-3-031-79164-2_7)
-(see [Citation](#citation)).
+The tool was built for
+[*DarijaGenie*](https://doi.org/10.1007/978-3-031-79164-2_7) (see [Citation](#citation)), a
+framework for building task-based conversational tutors for low-resource languages. DarijaGenie
+was evaluated on Moroccan Arabic (Darija), a mostly spoken dialect with little standardized
+spelling and almost no structured learning material, as a deliberately hard test case: an approach
+that works there should carry over to other under-resourced languages. Dialogue Tree Builder is how
+the tutor's scenario dialogues were authored, and it works the same way for any language.
 
 Everything runs in the browser. There is no backend and no account: the tree lives in memory
 while you work, and you save it by exporting it to a file.
