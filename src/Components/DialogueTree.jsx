@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import SortableTree from 'react-sortable-tree';
-import { removeNodeAtPath } from 'react-sortable-tree';
-import { addNodeUnderParent } from 'react-sortable-tree';
-import { changeNodeAtPath } from 'react-sortable-tree';
-import 'react-sortable-tree/style.css';
+import {
+    SortableTree,
+    addNodeUnderParent,
+    changeNodeAtPath,
+    removeNodeAtPath,
+} from '@nosferatu500/react-sortable-tree';
+import '@nosferatu500/react-sortable-tree/style.css';
 import './main.css';
 
 export default function DialogueTree() {
