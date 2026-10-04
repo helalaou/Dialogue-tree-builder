@@ -4,7 +4,6 @@ import { removeNodeAtPath } from 'react-sortable-tree';
 import { addNodeUnderParent } from 'react-sortable-tree';
 import { changeNodeAtPath } from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
-import 'react-tree-graph/dist/style.css'; 
 import './main.css';
 
 export default function DialogueTree() {
