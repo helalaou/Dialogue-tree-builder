@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
-import {
-    SortableTree,
-    addNodeUnderParent,
-    changeNodeAtPath,
-    removeNodeAtPath,
-} from '@nosferatu500/react-sortable-tree';
+import { SortableTree } from '@nosferatu500/react-sortable-tree';
 import '@nosferatu500/react-sortable-tree/style.css';
 import './main.css';
+import {
+    DEFAULT_NODE_TITLE,
+    NodeType,
+    addChildNode,
+    createInitialTree,
+    deleteNode,
+    isRootNode,
+    renameNode,
+    serializeTree,
+    toggleNodeType,
+} from '../lib/tree';
 
 export default function DialogueTree() {
-    const [treeData, setTreeData] = useState([
-        { title: "سلام", superparent: true, children: [], type: "BOT" },
-    ]);
-    const [text, setText] = useState("default");
+    const [treeData, setTreeData] = useState(createInitialTree);
+    const [text, setText] = useState(DEFAULT_NODE_TITLE);
     const [show, setShow] = useState();
 
-
-    const getNodeKey = ({ treeIndex }) => treeIndex;
-    const changenewNode = (node, text) => {
-        node.title = text;
-        return node;
-    }
     const exportData = () => {
         const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-            JSON.stringify(treeData)
+            serializeTree(treeData)
         )}`;
         const link = document.createElement("a");
         link.href = jsonString;
@@ -53,29 +51,21 @@ export default function DialogueTree() {
         
             <SortableTree
                 treeData={treeData}
-                onChange={treeData => {
-                    setTreeData(treeData)
-                    console.log(treeData)
-                }}
+                onChange={setTreeData}
 
                
                 generateNodeProps={({ node, path }) => ({
                     //title toggle between edit and show
                     title: (
                         <div>
-                            {show === path ? (
+                            {show === path.join('.') ? (
                                 <input
 
                                     onChange={e => setText(e.target.value)}
                                     //on key press enter change the text of the current node
                                     onKeyPress={e => {
                                         if (e.key === "Enter") {
-                                            changeNodeAtPath({
-                                                treeData,
-                                                path,
-                                                getNodeKey,
-                                                newNode: changenewNode(node, text),
-                                            });
+                                            setTreeData(renameNode(treeData, path, text));
                                             setShow(null);
                                         }
                                     }}
@@ -86,7 +76,7 @@ export default function DialogueTree() {
                             ) : (
                                 <span
                                     onClick={() => {
-                                        setShow(path);
+                                        setShow(path.join('.'));
                                         setText(node.title);
                                     }}
                                 >
@@ -99,18 +89,7 @@ export default function DialogueTree() {
                     buttons: [
 
                         <button onClick={() => {
-                            setTreeData(addNodeUnderParent({
-                                treeData,
-                                parentKey: path[path.length - 1],
-                                expandParent: true,
-                                getNodeKey: ({ treeIndex }) => treeIndex,
-                                newNode: {
-                                    title: text,
-                                    type: "USER",
-
-                                },
-                            }).treeData)
-                            console.log(treeData)
+                            setTreeData(addChildNode(treeData, path, text));
                         }}
                             style={{
                                 marginLeft: "10px",
@@ -126,15 +105,11 @@ export default function DialogueTree() {
 
                         <button
                             onClick={() => {
-                                if (node.superparent === true) {
+                                if (isRootNode(node)) {
                                     alert("You can't delete this node")
                                 }
                                 else {
-                                    setTreeData(removeNodeAtPath({
-                                        treeData,
-                                        path,
-                                        getNodeKey,
-                                    }));
+                                    setTreeData(deleteNode(treeData, path));
                                 }
                             }}
 
@@ -158,29 +133,11 @@ export default function DialogueTree() {
                             onClick={() => {
 
                                 // if its the parent node, it wont be allowed to change the type
-                                if (node.superparent === true) {
+                                if (isRootNode(node)) {
                                     alert("You can't change the type of this node")
                                 }
                                 else {
-                                    // if the node is a BOT node, it will change the type to USER and vice versa
-                                    if (node.type === undefined) {
-                                        node.type = "BOT"
-                                    }
-
-                                    if (node.type === "BOT") {
-                                        node.type = "USER"
-                                    }
-                                    else {
-                                        node.type = "BOT"
-                                    }
-
-                                    // update the tree
-                                    setTreeData(changeNodeAtPath({
-                                        treeData,
-                                        path,
-                                        getNodeKey,
-                                        newNode: node,
-                                    }));
+                                    setTreeData(toggleNodeType(treeData, path));
                                 }
                             }}
                             style={{
@@ -192,13 +149,13 @@ export default function DialogueTree() {
 
                             }}
 
-                        >{node.type === "BOT" ? <span role="img" aria-label="robot">🤖</span> : <span role="img" aria-label="user">🧑🏻</span>}</button>
+                        >{node.type === NodeType.BOT ? <span role="img" aria-label="robot">🤖</span> : <span role="img" aria-label="user">🧑🏻</span>}</button>
                         
                     ],
 
                 })}
 
-                canDrag={({ node }) => !node.superparent}
+                canDrag={({ node }) => !isRootNode(node)}
             />
  
             <div style={{ position: "absolute", top: "14px", right: "22px" ,
