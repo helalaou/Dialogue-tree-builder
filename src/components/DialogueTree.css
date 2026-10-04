@@ -1,0 +1,48 @@
+.dialogue-tree {
+  width: 1500px;
+  height: 3000px;
+}
+
+/* Keep the grey drag handles of the original react-sortable-tree theme. */
+.dialogue-tree .rst__tree {
+  --rst-icon-color: #d9d9d9;
+}
+
+.node-button {
+  margin-left: 10px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.node-button--add {
+  background-color: green;
+}
+
+.node-button--delete {
+  background-color: red;
+}
+
+.node-button--type {
+  padding: 1px;
+  background-color: transparent;
+  font-size: 18px;
+}
+
+.toolbar {
+  position: absolute;
+  top: 14px;
+  right: 22px;
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: black;
+}
+
+@media screen and (max-width: 600px) {
+  .toolbar {
+    margin-top: 3000px;
+  }
+}

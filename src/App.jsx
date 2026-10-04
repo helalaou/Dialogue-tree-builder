@@ -1,16 +1,5 @@
-import React from 'react';
-import DialogueTree from './Components/DialogueTree';
+import DialogueTree from './components/DialogueTree';
 
-
-
-function App() {
-  return (
-    <div >
-      <DialogueTree />
-       
-    </div>
-      
-  );
+export default function App() {
+  return <DialogueTree />;
 }
-
-export default App;
