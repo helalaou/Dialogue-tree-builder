@@ -177,4 +177,4 @@ If you use this tool in your research, please cite:
 
 ## License
 
-[MIT](License.md) © Hamza El Alaoui and Mehdi Alami Idrissi
+Released under the [MIT License](License.md).

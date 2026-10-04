@@ -8,8 +8,6 @@ abstract: >-
 authors:
   - family-names: "El Alaoui"
     given-names: "Hamza"
-  - family-names: "Alami Idrissi"
-    given-names: "Mehdi"
 repository-code: "https://github.com/helalaou/Dialogue-tree-builder"
 license: MIT
 version: 0.1.0
