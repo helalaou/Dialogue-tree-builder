@@ -12,9 +12,13 @@ import {
   serializeTree,
   toggleNodeType,
 } from '../lib/tree';
+import { downloadTextFile } from '../lib/download';
 import NodeActions from './NodeActions';
 import NodeTitle from './NodeTitle';
 import Toolbar from './Toolbar';
+
+/** Name of the file written by Export JSON. */
+const EXPORT_FILE_NAME = 'data.json';
 
 /**
  * Dialogue tree editor: a drag-and-drop tree of bot and user turns with
@@ -29,11 +33,7 @@ export default function DialogueTree() {
   const [editingKey, setEditingKey] = useState(null);
 
   const exportData = () => {
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(serializeTree(treeData))}`;
-    const link = document.createElement('a');
-    link.href = jsonString;
-    link.download = 'data.json';
-    link.click();
+    downloadTextFile(serializeTree(treeData), EXPORT_FILE_NAME, 'application/json;charset=utf-8');
   };
 
   const importData = (file) => {
