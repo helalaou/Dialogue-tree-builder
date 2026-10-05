@@ -8,8 +8,10 @@ import {
   createInitialTree,
   deleteNode,
   isRootNode,
+  parseTree,
   renameNode,
   serializeTree,
+  TreeImportError,
   toggleNodeType,
 } from '../lib/tree';
 import { downloadTextFile } from '../lib/download';
@@ -37,8 +39,18 @@ export default function DialogueTree() {
   };
 
   const importData = (file) => {
+    const reportError = (message) => window.alert(`Could not import "${file.name}". ${message}`);
     const reader = new FileReader();
-    reader.onload = () => setTreeData(JSON.parse(reader.result));
+    reader.onload = () => {
+      try {
+        setTreeData(parseTree(reader.result));
+        setEditingKey(null);
+      } catch (error) {
+        if (!(error instanceof TreeImportError)) throw error;
+        reportError(error.message);
+      }
+    };
+    reader.onerror = () => reportError('The file could not be read.');
     reader.readAsText(file);
   };
 

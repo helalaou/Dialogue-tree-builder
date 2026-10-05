@@ -13,6 +13,8 @@ export default function Toolbar({ onExport, onImport }) {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    // Clear the selection so choosing the same file again still triggers a change.
+    event.target.value = '';
     if (file) onImport(file);
   };
 

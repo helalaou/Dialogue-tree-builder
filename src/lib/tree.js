@@ -156,6 +156,71 @@ export function serializeTree(treeData) {
   return JSON.stringify(treeData);
 }
 
+/** Error thrown when an imported file is not a valid dialogue tree. */
+export class TreeImportError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'TreeImportError';
+  }
+}
+
+/**
+ * Parses and validates the contents of a file written by Export JSON.
+ *
+ * The file must hold a non-empty array of nodes. Every node must be an object
+ * with a string `title`; `type`, when present, must be `BOT` or `USER`, and
+ * `children`, when present, must be an array of nodes. Other fields (such as
+ * `expanded` and `superparent`) are kept as they are.
+ *
+ * @param {string} text Raw file contents.
+ * @returns {DialogueNode[]}
+ * @throws {TreeImportError} With a message that can be shown to the user.
+ */
+export function parseTree(text) {
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new TreeImportError('The file is not valid JSON.');
+  }
+
+  if (!Array.isArray(data)) {
+    throw new TreeImportError('Expected a list of nodes at the top level of the file.');
+  }
+  if (data.length === 0) {
+    throw new TreeImportError('The file does not contain any nodes.');
+  }
+  validateNodes(data, []);
+  return data;
+}
+
+/**
+ * @param {unknown[]} nodes
+ * @param {number[]} parentPosition 1-based position of the parent, for messages.
+ */
+function validateNodes(nodes, parentPosition) {
+  nodes.forEach((node, index) => {
+    const position = [...parentPosition, index + 1];
+    const label = `Node ${position.join('.')}`;
+
+    if (typeof node !== 'object' || node === null || Array.isArray(node)) {
+      throw new TreeImportError(`${label} is not an object.`);
+    }
+    if (typeof node.title !== 'string') {
+      throw new TreeImportError(`${label} has no text ("title" must be a string).`);
+    }
+    if (node.type !== undefined && !Object.values(NodeType).includes(node.type)) {
+      throw new TreeImportError(`${label} has an unknown type; use "BOT" or "USER".`);
+    }
+    if (node.children !== undefined) {
+      if (!Array.isArray(node.children)) {
+        throw new TreeImportError(`${label} has "children" that is not a list.`);
+      }
+      validateNodes(node.children, position);
+    }
+  });
+}
+
 /**
  * @param {DialogueNode[]} treeData
  * @param {NodePath} path
