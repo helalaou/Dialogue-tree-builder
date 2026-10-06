@@ -1,0 +1,6 @@
+dist
+coverage
+package-lock.json
+public
+*.md
+CITATION.cff
