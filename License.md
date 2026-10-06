@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 Hamza El Alaoui & Mehdi Alami Idrissi
+Copyright (c) 2022 Hamza El Alaoui
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
