@@ -1,6 +1,21 @@
+/*
+ * The editor fills the viewport and the tree scrolls inside it, both
+ * vertically and, for deep or long rows, horizontally. On wide screens the
+ * toolbar floats in the top-right corner; on narrow screens it sits in its
+ * own row above the tree so it never covers a node.
+ */
 .dialogue-tree {
-  width: 1500px;
-  height: 3000px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 8px;
+}
+
+.dialogue-tree__canvas {
+  flex: 1;
+  min-height: 0;
 }
 
 /* Keep the grey drag handles of the original react-sortable-tree theme. */
@@ -34,6 +49,8 @@
   position: absolute;
   top: 14px;
   right: 22px;
+  /* Tree rows span the full width; keep the toolbar above them. */
+  z-index: 2;
   display: flex;
   gap: 10px;
   padding: 5px;
@@ -41,8 +58,10 @@
   background-color: black;
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 720px) {
   .toolbar {
-    margin-top: 3000px;
+    position: static;
+    align-self: flex-end;
+    margin-bottom: 8px;
   }
 }

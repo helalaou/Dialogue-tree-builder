@@ -99,13 +99,15 @@ export default function DialogueTree() {
 
   return (
     <div className="dialogue-tree">
-      <SortableTree
-        treeData={treeData}
-        onChange={setTreeData}
-        generateNodeProps={generateNodeProps}
-        canDrag={({ node }) => !isRootNode(node)}
-      />
       <Toolbar onExport={exportData} onImport={importData} />
+      <div className="dialogue-tree__canvas">
+        <SortableTree
+          treeData={treeData}
+          onChange={setTreeData}
+          generateNodeProps={generateNodeProps}
+          canDrag={({ node }) => !isRootNode(node)}
+        />
+      </div>
     </div>
   );
 }
