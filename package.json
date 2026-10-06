@@ -15,7 +15,9 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nosferatu500/react-sortable-tree": "^7.1.0",
@@ -30,6 +32,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.13.0",
     "prettier": "^3.9.9",
-    "vite": "^8.3.3"
+    "vite": "^8.3.3",
+    "vitest": "^4.1.11"
   }
 }
