@@ -14,22 +14,26 @@ workflow and the conventions the project follows.
 2. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
-   The app opens at <http://localhost:3000>.
+   The app runs at <http://localhost:5173>.
 
-The project uses `react-scripts` 3, which relies on webpack 4. On Node.js 17 or newer, set
-`NODE_OPTIONS=--openssl-legacy-provider` before running `npm start` or `npm run build`
-(see the [README](README.md#getting-started)).
+You need Node.js 20.19 or newer.
 
 ## Before opening a pull request
 
-Run the same check as CI and make sure it passes:
+Run the same checks as CI and make sure they pass:
 
 ```bash
+npm run lint
+npm run format:check
+npm test
 npm run build
 ```
+
+`npm run format` fixes formatting. Changes to the tree operations in `src/lib/tree.js` should come
+with unit tests in `src/lib/tree.test.js`.
 
 Then try your change in the browser: build a small tree, edit a few nodes, and confirm that
 **Export JSON** and **Import JSON** still round-trip correctly.
@@ -42,7 +46,7 @@ Then try your change in the browser: build a small tree, edit a few nodes, and c
   `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`, `ci:`, `build:`.
 - **Keep the JSON format stable.** Exported files are meant to be consumed by other tools. If a
   change alters the shape of the exported data, call it out clearly in the pull request.
-- **Formatting** follows [`.editorconfig`](.editorconfig).
+- **Formatting** is handled by Prettier (see `.prettierrc.json`) and [`.editorconfig`](.editorconfig).
 
 ## Reporting bugs and requesting features
 

@@ -13,8 +13,8 @@
   <a href="https://github.com/helalaou/Dialogue-tree-builder/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/helalaou/Dialogue-tree-builder/actions/workflows/ci.yml/badge.svg" /></a>
   <a href="License.md"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-4f46e5.svg" /></a>
   <a href="https://doi.org/10.1007/978-3-031-79164-2_7"><img alt="DOI" src="https://img.shields.io/badge/DOI-10.1007%2F978--3--031--79164--2__7-blue.svg" /></a>
-  <img alt="React 16" src="https://img.shields.io/badge/React-16-149eca.svg" />
-  <img alt="Create React App" src="https://img.shields.io/badge/Create%20React%20App-3-09d3ac.svg" />
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-149eca.svg" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-8-646cff.svg" />
 </p>
 
 <p align="center">
@@ -50,7 +50,7 @@ while you work, and you save it by exporting it to a file.
 | **Delete branches**     | **Delete** removes a node together with everything below it.                                                                      |
 | **Protected root**      | The conversation's opening bot message cannot be deleted, dragged or turned into a user turn.                                     |
 | **JSON export**         | **Export JSON** downloads the whole tree as `data.json`.                                                                          |
-| **JSON import**         | **Import JSON** loads a previously exported file so you can keep working on it.                                                  |
+| **JSON import**         | **Import JSON** loads a previously exported file so you can keep working on it. Invalid files are rejected with a message.       |
 
 <p align="center">
   <img src="docs/assets/screenshot-editing.png" alt="Editing a user reply inline" width="720" />
@@ -60,7 +60,7 @@ while you work, and you save it by exporting it to a file.
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org) 16 or newer (CI uses Node 20) and npm
+- [Node.js](https://nodejs.org) 20.19 or newer (CI tests Node 20 and 22) and npm
 
 ### Install and run
 
@@ -68,19 +68,10 @@ while you work, and you save it by exporting it to a file.
 git clone https://github.com/helalaou/Dialogue-tree-builder.git
 cd Dialogue-tree-builder
 npm ci
-npm start
+npm run dev
 ```
 
-The app opens at <http://localhost:3000>.
-
-The project is built with `react-scripts` 3, which uses webpack 4. On Node.js 17 or newer, enable
-the legacy OpenSSL provider first, or the dev server and build fail with
-`ERR_OSSL_EVP_UNSUPPORTED`:
-
-```bash
-export NODE_OPTIONS=--openssl-legacy-provider   # macOS / Linux
-set NODE_OPTIONS=--openssl-legacy-provider      # Windows (cmd)
-```
+The development server runs at <http://localhost:5173>.
 
 ### Build for production
 
@@ -88,7 +79,8 @@ set NODE_OPTIONS=--openssl-legacy-provider      # Windows (cmd)
 npm run build
 ```
 
-The static site is written to `build/` and can be served by any static host.
+The static site is written to `dist/` and can be served by any static host. Run `npm run preview`
+to serve the production build locally.
 
 ## Usage
 
@@ -99,8 +91,12 @@ The static site is written to `build/` and can be served by any static host.
 4. Drag nodes by their handle to restructure the conversation.
 5. Click **Export JSON** to save your work, and **Import JSON** to load it again later.
 
-The editor is designed for desktop browsers. On narrow screens the Export and Import buttons move
-below the tree canvas.
+The editor is designed for desktop browsers but works on phones too: on narrow screens the Export
+and Import buttons sit in their own row above the tree, and the tree scrolls sideways to reach long
+or deeply nested messages.
+
+If an imported file is not valid JSON or does not have the format below, the editor says what is
+wrong (for example, `Node 1.2 has no text`) and keeps the current tree.
 
 ## JSON format
 
@@ -134,25 +130,42 @@ The exported file is the tree as an array of nodes. Each node has a `title` (the
 
 ## Scripts
 
-| Command         | Description                          |
-| --------------- | ------------------------------------ |
-| `npm start`     | Development server with live reload  |
-| `npm run build` | Production build into `build/`       |
+| Command                | Description                                 |
+| ---------------------- | ------------------------------------------- |
+| `npm run dev`          | Development server with hot reload          |
+| `npm run build`        | Production build into `dist/`               |
+| `npm run preview`      | Serve the production build locally          |
+| `npm run lint`         | Lint with ESLint                            |
+| `npm run format`       | Format the code with Prettier               |
+| `npm run format:check` | Check formatting without changing files     |
+| `npm test`             | Run the unit tests once with Vitest         |
+| `npm run test:watch`   | Run the unit tests in watch mode            |
 
 ## Project structure
 
 ```
-├── public/                    HTML template, web manifest and app icons
+├── index.html                 HTML entry point
+├── public/                    web manifest and app icons
 ├── src/
-│   ├── Components/
-│   │   ├── DialogueTree.jsx   tree editor: nodes, actions, import and export
-│   │   └── main.css           small-screen layout tweak
-│   ├── App.js
-│   └── index.js
+│   ├── components/
+│   │   ├── DialogueTree.jsx   tree editor: state, import and export
+│   │   ├── DialogueTree.css   editor layout and node button styles
+│   │   ├── NodeActions.jsx    Add, Delete and bot/user buttons of a node
+│   │   ├── NodeTitle.jsx      node text with inline editing
+│   │   └── Toolbar.jsx        Export JSON and Import JSON buttons
+│   ├── lib/
+│   │   ├── tree.js            pure tree operations, export and import validation
+│   │   ├── tree.test.js       unit tests for the tree operations
+│   │   └── download.js        file download helper
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
 └── docs/assets/               README screenshots
 ```
 
-The tree editor is built on [react-sortable-tree](https://github.com/frontend-collective/react-sortable-tree).
+The tree editor is built on
+[@nosferatu500/react-sortable-tree](https://github.com/nosferatu500/react-sortable-tree), the
+maintained fork of react-sortable-tree, and bundled with [Vite](https://vite.dev).
 
 ## Contributing
 
