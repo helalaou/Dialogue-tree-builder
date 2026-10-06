@@ -8,7 +8,7 @@
 
 ## Checklist
 
-- [ ] `npm run build` succeeds
+- [ ] `npm run lint`, `npm test` and `npm run build` succeed
 - [ ] Building, editing, exporting and re-importing a tree still works
 - [ ] Changes to the exported JSON format (if any) are described above
 - [ ] Documentation updated where needed
